@@ -1,0 +1,115 @@
+.chat {
+  margin: 0 auto;
+  width: 768px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  &__wrapper {
+    display: flex;
+    height: 100%;
+  }
+
+  &__sidebar {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 30%;
+    background-color: #4e7f9f;
+    padding: 10px;
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__window {
+    box-sizing: border-box;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    background-color: #fff;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    position: relative;
+  }
+
+  &__warning {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f0f3f5;
+    font-weight: bold;
+  }
+
+  &__messages {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    overflow: auto;
+    margin-bottom: 15px;
+  }
+
+  &__bottom {
+    position: relative;
+  }
+
+  &__input-message {
+    margin: 0;
+    padding: 0;
+    display: block;
+    box-sizing: border-box;
+    padding: 5px 50px 5px 15px;
+    border-radius: 20px;
+    width: 100%;
+    border: 2px solid #f0f3f5;
+    min-height: 50px;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #3399ff;
+    }
+  }
+
+  &__send-msg-btn {
+    cursor: pointer;
+    top: 12px;
+    right: 16px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: transparent;
+    opacity: 0.3;
+    transition: all 0.3s ease;
+    animation-name: buttonAnimation;
+    animation-duration: 0.3s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes buttonAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

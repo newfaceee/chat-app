@@ -1,0 +1,68 @@
+.form {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  box-sizing: border-box;
+  width: 300px;
+  min-height: 150px;
+  background-color: #fff;
+  padding: 10px;
+  font-size: 26px;
+
+  border-radius: 10px;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    animation-name: show;
+    animation-duration: 0.4s;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  &__name {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__input {
+    border: none;
+    background-color: #f0f3f5;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    &:focus {
+      border: 1px solid #3399ff;
+    }
+  }
+
+  &__close-btn {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent url("../../assets/icons/close.svg") no-repeat center;
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+  }
+}
+
+@keyframes show {
+  from {
+    top: -100px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
