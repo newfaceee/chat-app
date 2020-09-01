@@ -2,7 +2,7 @@
 
 ### Тестовое задание
 # Preview: 
-![Preview-gif](https://giphy.com/gifs/RGSo4KOJX5NjsbUG3n)
+![Preview-gif](https://media.giphy.com/media/RGSo4KOJX5NjsbUG3n/giphy.gif)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
