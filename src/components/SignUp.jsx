@@ -22,6 +22,12 @@ const SignUp = ({ handleSignUp }) => {
   const [password, setPassword] = React.useState("");
 
   /**
+   * @type {[Boolean, Function]} - state for fetch
+   */
+
+  const [isFetching, setIsFetching] = React.useState(false);
+
+  /**
    * Handle change of email input
    * @param {Object} evt - object event
    */
@@ -68,21 +74,37 @@ const SignUp = ({ handleSignUp }) => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-
+    setIsFetching(true);
     try {
       const { user } = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
       createUserProfileDocument(user, { displayName: login });
+      setEmail("");
+      setPassword("");
+      setLogin("");
+      setIsFetching(false);
     } catch (err) {
-      console.log("something went wrong while creating user", err.message);
+      alert("Something went wrong while creating user");
     }
-
-    setEmail("");
-    setPassword("");
-    setLogin("");
-    handleSignUp();
   };
+
+  /**
+   *
+   * @param {Object} evt - object event
+   */
+  const handleEnterPress = (evt) => {
+    if (evt.keyCode === 13) {
+      handleSubmit(evt);
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleEnterPress);
+    return () => {
+      document.removeEventListener("keydown", handleEnterPress);
+    };
+  }, []);
 
   return (
     <div className="modal">
@@ -98,6 +120,7 @@ const SignUp = ({ handleSignUp }) => {
             placeholder="Login"
             value={login}
             onChange={handleLoginChange}
+            disabled={isFetching}
           />
           <input
             type="email"
@@ -105,6 +128,7 @@ const SignUp = ({ handleSignUp }) => {
             placeholder="E-mail"
             value={email}
             onChange={handleEmailChange}
+            disabled={isFetching}
           />
           <input
             type="password"
@@ -112,8 +136,11 @@ const SignUp = ({ handleSignUp }) => {
             placeholder="Password"
             value={password}
             onChange={handlePasswordChange}
+            disabled={isFetching}
           />
-          <input type="submit" className="form__btn btn" value="Sign Up" />
+          <button type="submit" className="form__btn btn" disabled={isFetching}>
+            Sign Up
+          </button>
         </div>
       </form>
     </div>
