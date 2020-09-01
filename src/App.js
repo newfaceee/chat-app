@@ -13,8 +13,14 @@ const initialMessages = {
   messages: [],
   setMessages: () => {},
 };
-
+/**
+ * @type {Object} creating user context with initial value
+ */
 const UserContext = React.createContext(initialUserContext);
+
+/**
+ * @type {Object} creating messages context with initial value
+ */
 const MessagesContext = React.createContext(initialMessages);
 
 const App = () => {
@@ -30,6 +36,8 @@ const App = () => {
 
   const [messages, setMessages] = React.useState([]);
 
+  const [isFetching, setIsFetching] = React.useState(false);
+
   /**
    * @type {Object}
    */
@@ -43,6 +51,7 @@ const App = () => {
   const messagesValue = { messages, setMessages };
 
   React.useEffect(() => {
+    setIsFetching(true);
     const unsubscribeFromAuth = firebase
       .auth()
       .onAuthStateChanged(async (userInfo) => {
@@ -50,6 +59,7 @@ const App = () => {
           const userRef = await createUserProfileDocument(userInfo);
           setUser(userRef);
         }
+        setIsFetching(false);
       });
 
     return () => {
@@ -79,7 +89,7 @@ const App = () => {
     <>
       <MessagesContext.Provider value={messagesValue}>
         <UserContext.Provider value={userValue}>
-          <Chat />
+          <Chat isFetching={isFetching} />
         </UserContext.Provider>
       </MessagesContext.Provider>
     </>
