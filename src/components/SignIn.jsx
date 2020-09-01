@@ -54,40 +54,47 @@ const SignIn = ({ handleSignIn }) => {
    * @param {Object} evt - event object
    */
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    setIsFetching(true);
-    if (email.length === 0 || password.length === 0) {
-      alert("Email or password are empty or email is invalid");
-      return;
-    }
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      setEmail("");
-      setPassword("");
-      setIsFetching(false);
-    } catch (err) {
-      alert("Can't sign in, please check your e-mail or password");
-    }
-  };
+  const handleSubmit = React.useCallback(
+    async (evt) => {
+      evt.preventDefault();
+      setIsFetching(true);
+      if (email.length === 0 || password.length === 0) {
+        alert("Email or password are empty or email is invalid");
+        return;
+      }
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        setEmail("");
+        setPassword("");
+        setIsFetching(false);
+      } catch (err) {
+        alert("Can't sign in, please check your e-mail or password");
+        setIsFetching(false);
+      }
+    },
+    [email, password]
+  );
 
   /**
    * Submits form when press enter
    * @param {Object} evt - object event
    */
 
-  const handleEnterPress = (evt) => {
-    if (evt.keyCode === 13) {
-      handleSubmit(evt);
-    }
-  };
+  const handleEnterPress = React.useCallback(
+    (evt) => {
+      if (evt.keyCode === 13) {
+        handleSubmit(evt);
+      }
+    },
+    [handleSubmit]
+  );
 
   React.useEffect(() => {
     document.addEventListener("keydown", handleEnterPress);
     return () => {
       document.removeEventListener("keydown", handleEnterPress);
     };
-  }, []);
+  }, [handleEnterPress]);
   return (
     <div className="modal">
       <form onSubmit={handleSubmit} className="modal__form form">

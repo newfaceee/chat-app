@@ -72,39 +72,47 @@ const SignUp = ({ handleSignUp }) => {
    * @param {Object} evt - object event
    */
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    setIsFetching(true);
-    try {
-      const { user } = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-      createUserProfileDocument(user, { displayName: login });
-      setEmail("");
-      setPassword("");
-      setLogin("");
-      setIsFetching(false);
-    } catch (err) {
-      alert("Something went wrong while creating user");
-    }
-  };
+  const handleSubmit = React.useCallback(
+    async (evt) => {
+      evt.preventDefault();
+      setIsFetching(true);
+      try {
+        const { user } = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password);
+        createUserProfileDocument(user, { displayName: login });
+        setEmail("");
+        setPassword("");
+        setLogin("");
+        setIsFetching(false);
+      } catch (err) {
+        alert("Something went wrong while creating user");
+        setIsFetching(false);
+      }
+    },
+    [email, login, password]
+  );
 
   /**
-   *
+   * Submits form when press enter
    * @param {Object} evt - object event
    */
-  const handleEnterPress = (evt) => {
-    if (evt.keyCode === 13) {
-      handleSubmit(evt);
-    }
-  };
+
+  const handleEnterPress = React.useCallback(
+    (evt) => {
+      if (evt.keyCode === 13) {
+        handleSubmit(evt);
+      }
+    },
+    [handleSubmit]
+  );
 
   React.useEffect(() => {
     document.addEventListener("keydown", handleEnterPress);
     return () => {
       document.removeEventListener("keydown", handleEnterPress);
     };
-  }, []);
+  }, [handleEnterPress]);
 
   return (
     <div className="modal">
