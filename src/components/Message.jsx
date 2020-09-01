@@ -15,7 +15,7 @@ const Message = ({ message }) => {
    * @type {string} HH:MM formatted time
    */
 
-  const time = transformTime(createdAt.seconds);
+  const time = transformTime(createdAt);
 
   return (
     <div className={`message ${isItMine ? "message--my" : ""}`}>
