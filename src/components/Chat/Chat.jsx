@@ -5,7 +5,12 @@ import Warning from "./Warning";
 
 import { UserContext } from "../../App";
 
-const Chat = () => {
+/**
+ *
+ * @param {Boolean} props.isFetching - auth state
+ */
+
+const Chat = ({ isFetching }) => {
   /**
    * @type {{user: Object}} - user object from context
    */
@@ -15,7 +20,7 @@ const Chat = () => {
     <section className="chat">
       <div className="chat__wrapper">
         <div className="chat__sidebar">
-          <Authentication />
+          {isFetching ? "Loading..." : <Authentication />}
         </div>
         <div className="chat__window">{!user ? <Warning /> : <Content />}</div>
       </div>
