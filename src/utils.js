@@ -3,9 +3,8 @@
  * @returns string in format HH::MM
  */
 
-export const transformTime = (seconds) => {
-  const date = new Date(1970, 0, 1);
-  date.setSeconds(seconds);
+export const transformTime = (d) => {
+  const date = new Date(d);
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   return `${hours}:${minutes}`;
@@ -22,7 +21,8 @@ export const transformTime = (seconds) => {
 
 export const createMessage = (message, senderId, sentBy) => {
   const id = String(Math.random().toFixed(6)).split(".")[1];
-  const createdAt = new Date();
+  const createdAt = new Date().toISOString();
+
   return {
     message,
     senderId,
